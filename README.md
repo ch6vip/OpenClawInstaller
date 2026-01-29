@@ -8,6 +8,10 @@
 
 > 🚀 一键部署你的私人 AI 助手 ClawdBot，支持多平台多模型配置
 
+<p align="center">
+  <img src="photo/menu.png" alt="ClawdBot 配置中心" width="600">
+</p>
+
 ## 📖 目录
 
 - [功能特性](#-功能特性)
@@ -23,6 +27,11 @@
 ## ✨ 功能特性
 
 ### 🤖 多模型支持
+
+<p align="center">
+  <img src="photo/llm.png" alt="AI 模型配置" width="600">
+</p>
+
 - **Anthropic Claude** - Claude Opus 4 / Sonnet 4 / Haiku
 - **OpenAI GPT** - GPT-4o / GPT-4 Turbo / o1
 - **OpenAI Compatible** - 支持任何兼容 OpenAI API 的服务 (OneAPI/NewAPI/代理等)
@@ -34,12 +43,27 @@
 - **Azure OpenAI** - 企业级 Azure 部署
 
 ### 📱 多渠道接入
+
+<p align="center">
+  <img src="photo/social.png" alt="消息渠道配置" width="600">
+</p>
+
 - Telegram Bot
 - Discord Bot
 - WhatsApp
 - Slack
 - 微信 (WeChat)
 - iMessage (仅 macOS)
+
+### 🧪 快速测试
+
+<p align="center">
+  <img src="photo/messages.png" alt="快速测试" width="600">
+</p>
+
+- API 连接测试
+- 渠道连接验证
+- ClawdBot 诊断工具
 
 ### 🧠 核心能力
 - **持久记忆** - 跨对话、跨平台的长期记忆
@@ -105,18 +129,11 @@ clawdbot start
 
 ### 配置 AI 模型
 
-运行配置菜单后选择 `[2] AI 模型配置`：
+运行配置菜单后选择 `[2] AI 模型配置`，可选择多种 AI 提供商：
 
-```
-🤖 AI 模型配置
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-选择 AI 提供商:
-
-  [1] 🟣 Anthropic Claude (推荐)
-  [2] 🟢 OpenAI GPT
-  [3] 🟠 Ollama 本地模型
-  [4] 🔵 OpenRouter (多模型网关)
-```
+<p align="center">
+  <img src="photo/llm.png" alt="AI 模型配置界面" width="600">
+</p>
 
 #### Anthropic Claude 配置
 
