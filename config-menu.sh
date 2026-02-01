@@ -156,7 +156,7 @@ get_env_value() {
 
 # 检查 OpenClaw 是否已安装
 check_openclaw_installed() {
-    command -v openclaw-cn &> /dev/null
+    command -v openclaw-cn-cn &> /dev/null
 }
 
 # 重启 Gateway 使渠道配置生效
@@ -946,7 +946,7 @@ show_status() {
     echo ""
     
     # OpenClaw 服务状态
-    if command -v openclaw-cn &> /dev/null; then
+    if command -v openclaw-cn-cn &> /dev/null; then
         echo -e "  ${GREEN}✓${NC} OpenClaw 已安装: $(openclaw --version 2>/dev/null || echo 'unknown')"
         
         # 检查服务运行状态
@@ -3631,7 +3631,7 @@ manage_service() {
     case $choice in
         1)
             echo ""
-            if command -v openclaw-cn &> /dev/null; then
+            if command -v openclaw-cn-cn &> /dev/null; then
                 # 检测端口是否被占用
                 local port=18789
                 local port_pid=$(lsof -ti :$port 2>/dev/null | head -1)
@@ -3739,7 +3739,7 @@ manage_service() {
         2)
             echo ""
             log_info "正在停止服务..."
-            if command -v openclaw-cn &> /dev/null; then
+            if command -v openclaw-cn-cn &> /dev/null; then
                 openclaw gateway stop 2>/dev/null || true
                 # 确保进程被杀死
                 pkill -f "openclaw.*gateway" 2>/dev/null || true
@@ -3756,7 +3756,7 @@ manage_service() {
         3)
             echo ""
             log_info "正在重启服务..."
-            if command -v openclaw-cn &> /dev/null; then
+            if command -v openclaw-cn-cn &> /dev/null; then
                 # 检查是否有 LaunchAgent 在管理服务
                 local has_launchagent=false
                 if launchctl list 2>/dev/null | grep -q "openclaw"; then
@@ -3866,7 +3866,7 @@ manage_service() {
             ;;
         4)
             echo ""
-            if command -v openclaw-cn &> /dev/null; then
+            if command -v openclaw-cn-cn &> /dev/null; then
                 openclaw status
             else
                 log_error "OpenClaw 未安装"
@@ -3874,7 +3874,7 @@ manage_service() {
             ;;
         5)
             echo ""
-            if command -v openclaw-cn &> /dev/null; then
+            if command -v openclaw-cn-cn &> /dev/null; then
                 echo -e "${CYAN}按 Ctrl+C 退出日志查看${NC}"
                 sleep 1
                 openclaw logs --follow
@@ -3884,7 +3884,7 @@ manage_service() {
             ;;
         6)
             echo ""
-            if command -v openclaw-cn &> /dev/null; then
+            if command -v openclaw-cn-cn &> /dev/null; then
                 openclaw doctor --fix
             else
                 log_error "OpenClaw 未安装"
@@ -3892,7 +3892,7 @@ manage_service() {
             ;;
         7)
             echo ""
-            if command -v openclaw-cn &> /dev/null; then
+            if command -v openclaw-cn-cn &> /dev/null; then
                 log_info "正在安装系统服务..."
                 openclaw gateway install
                 log_info "系统服务已安装"
@@ -4413,7 +4413,7 @@ advanced_settings() {
             ;;
         5)
             if confirm "确定要清理日志吗？" "n"; then
-                if command -v openclaw-cn &> /dev/null; then
+                if command -v openclaw-cn-cn &> /dev/null; then
                     openclaw logs clear 2>/dev/null || log_warn "OpenClaw 日志清理命令不可用"
                 fi
                 rm -f /tmp/openclaw-gateway.log 2>/dev/null
