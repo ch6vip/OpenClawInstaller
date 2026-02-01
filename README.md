@@ -38,7 +38,7 @@
 ### 方式一：一键安装（推荐）
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/miaoxworld/OpenClawInstaller/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/ch6vip/OpenClawInstaller/main/install.sh | bash
 ```
 
 安装脚本会自动：
@@ -53,7 +53,7 @@ curl -fsSL https://raw.githubusercontent.com/miaoxworld/OpenClawInstaller/main/i
 
 ```bash
 # 1. 克隆仓库
-git clone https://github.com/miaoxworld/OpenClawInstaller.git
+git clone https://github.com/ch6vip/OpenClawInstaller.git
 cd OpenClawInstaller
 
 # 2. 添加执行权限
@@ -86,7 +86,7 @@ openclaw gateway start
 bash ~/.openclaw/config-menu.sh
 
 # 或从 GitHub 下载运行
-curl -fsSL https://raw.githubusercontent.com/miaoxworld/OpenClawInstaller/main/config-menu.sh | bash
+curl -fsSL https://raw.githubusercontent.com/ch6vip/OpenClawInstaller/main/config-menu.sh | bash
 ```
 
 ## ✨ 功能特性
