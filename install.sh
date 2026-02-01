@@ -297,7 +297,7 @@ install_openclaw() {
     
     # 使用 npm 全局安装
     log_info "正在从 npm 安装 OpenClaw..."
-    npm install -g openclaw@$OPENCLAW_VERSION --unsafe-perm
+    npm install -g openclaw-cn@$OPENCLAW_VERSION --unsafe-perm
     
     # 验证安装
     if check_command openclaw; then
