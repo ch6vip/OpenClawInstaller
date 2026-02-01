@@ -298,6 +298,27 @@ install_openclaw() {
     # 使用 npm 全局安装
     log_info "正在从 npm 安装 OpenClaw..."
     npm install -g openclaw-cn@$OPENCLAW_VERSION --unsafe-perm
+
+    # 确保 npm 全局 bin 目录在 PATH 中（部分环境下 npm -g 不会自动进入 PATH）
+    local npm_bin=""
+    npm_bin="$(npm bin -g 2>/dev/null || true)"
+    if [ -n "$npm_bin" ]; then
+        export PATH="$npm_bin:$PATH"
+    fi
+
+    # 有些发行包可能只提供 openclaw-cn 命令；为兼容脚本其余逻辑，尝试提供 openclaw 入口
+    if ! check_command openclaw && check_command openclaw-cn; then
+        if [ -n "$npm_bin" ] && [ -w "$npm_bin" ] && [ -x "$npm_bin/openclaw-cn" ] && [ ! -e "$npm_bin/openclaw" ]; then
+            cat > "$npm_bin/openclaw" << EOF
+#!/bin/sh
+exec "$npm_bin/openclaw-cn" "\$@"
+EOF
+            chmod +x "$npm_bin/openclaw" 2>/dev/null || true
+        else
+            # 回退：仅在当前脚本进程中提供 openclaw 函数（不保证后续新 shell 可用）
+            openclaw() { openclaw-cn "$@"; }
+        fi
+    fi
     
     # 验证安装
     if check_command openclaw; then
@@ -336,12 +357,19 @@ configure_openclaw_model() {
     
     local env_file="$HOME/.openclaw/env"
     local openclaw_json="$HOME/.openclaw/openclaw.json"
+    local npm_bin=""
+    npm_bin="$(npm bin -g 2>/dev/null || true)"
     
     # 创建环境变量文件
     cat > "$env_file" << EOF
 # OpenClaw 环境变量配置
 # 由安装脚本自动生成: $(date '+%Y-%m-%d %H:%M:%S')
 EOF
+
+    # 追加 npm 全局 bin 目录到 PATH（避免 openclaw 命令找不到）
+    if [ -n "$npm_bin" ]; then
+        echo "export PATH=$npm_bin:\$PATH" >> "$env_file"
+    fi
 
     # 根据 AI_PROVIDER 设置对应的环境变量
     case "$AI_PROVIDER" in

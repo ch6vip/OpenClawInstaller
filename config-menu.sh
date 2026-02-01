@@ -155,8 +155,37 @@ get_env_value() {
 # ================================ 测试功能 ================================
 
 # 检查 OpenClaw 是否已安装
+ensure_openclaw_shim() {
+    # openclaw 存在则不处理
+    if command -v openclaw &> /dev/null; then
+        return 0
+    fi
+
+    # 若仅存在 openclaw-cn，则尝试补一个 openclaw 入口
+    if ! command -v openclaw-cn &> /dev/null; then
+        return 1
+    fi
+
+    local npm_bin=""
+    npm_bin="$(npm bin -g 2>/dev/null || true)"
+
+    if [ -n "$npm_bin" ] && [ -w "$npm_bin" ] && [ -x "$npm_bin/openclaw-cn" ] && [ ! -e "$npm_bin/openclaw" ]; then
+        cat > "$npm_bin/openclaw" << EOF
+#!/bin/sh
+exec "$npm_bin/openclaw-cn" "\$@"
+EOF
+        chmod +x "$npm_bin/openclaw" 2>/dev/null || true
+    fi
+
+    # 回退：仅在当前脚本进程提供函数别名
+    if ! command -v openclaw &> /dev/null; then
+        openclaw() { openclaw-cn "$@"; }
+    fi
+}
+
 check_openclaw_installed() {
-    command -v openclaw-cn &> /dev/null
+    ensure_openclaw_shim > /dev/null 2>&1 || true
+    command -v openclaw &> /dev/null || command -v openclaw-cn &> /dev/null
 }
 
 # 重启 Gateway 使渠道配置生效
